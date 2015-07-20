@@ -31,13 +31,13 @@ def build_slack_attachment(name, response, valid_name=True):
     }
 
     if not valid_name:
-        message['text'] = ':warning: Username _%s_ is not a valid username!' % name
+        message['text'] = ':warning: Username `%s` is not a valid username!' % name
     elif not response:
-        message['text'] = ':white_check_mark: Username _%s_ is available!' % name
+        message['text'] = ':white_check_mark: Username `%s` is available!' % name
     elif 'legacy' in response[0]:
-        message['text'] = ':x: Username _%s_ is taken but not premium!' % name
+        message['text'] = ':x: Username `%s` is taken but not premium!' % name
     else:
-        message['text'] = ':x: Username _%s_ is taken!' % name
+        message['text'] = ':x: Username `%s` is taken!' % name
 
     return message
 
