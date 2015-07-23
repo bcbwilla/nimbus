@@ -15,11 +15,12 @@ class MojangStatus(CommandPlugin):
     mojang_status_link = 'http://status.mojang.com/check'
 
     server_name = {
-        'auth.mojang.com': 'Login',
-        'session.minecraft.net': 'Session',
-        'minecraft.net': 'Website',
-        'textures.minecraft.net': 'Textures',
-        'skins.minecraft.net': 'Skins'
+        'minecraft.net': 'Minecraft.net',
+        'account.mojang.com': 'Mojang accounts website',
+        'authserver.mojang.com': 'Login',
+        'sessionserver.mojang.com': 'Sessions',
+        'textures.minecraft.net': 'Skins',
+        'api.mojang.com': 'API'
     }
 
     status = {
