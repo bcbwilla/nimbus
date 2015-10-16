@@ -129,7 +129,7 @@ class PunishmentScraper(OCNScraper):
     def format_data(self, d):
         """ generate slack message attachment """
         a = {}
-        verb = 'punished' if d['pun_type'] == 'Ban' else 'warned'
+        verb = 'punished' if d['pun_type'] == 'Ban' or d['pun_type'] == 'Forum Ban' else 'warned'
         a['fallback'] = '%s %s by %s with reason "_%s_" (%s)' % \
                         (self.get_slack_link(d['punishee']), verb, self.get_slack_link(d['punisher']), d['reason'],
                          d['when'])
