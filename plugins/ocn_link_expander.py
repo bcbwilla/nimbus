@@ -60,6 +60,8 @@ class ForumScraper(OCNScraper):
         soup = self.make_soup()
         url = self.url
         post_id = url.split('#')[1] if '#' in url else None
+        if post_id is None:
+            post_id = url.split('/posts/')[1] if '/posts/' in url else None
 
         d = {}
         try:
