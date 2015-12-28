@@ -2,7 +2,7 @@ import random
 from plugin import CommandPlugin, PluginException
 
 
-class Echo(CommandPlugin):
+class Ball8(CommandPlugin):
     """
     8ball command
     """
