@@ -1,16 +1,16 @@
 from plugin import CommandPlugin, PluginException
 import json
 
-class Vote(CommandPlugin):
+class Poll(CommandPlugin):
 
-    """Establishes a vote on emojis based on two emojis provided in the command"""
+    """Creates a poll on a question based on emoji reactions provided by the bot"""
 
     def __init__(self, bot):
         CommandPlugin.__init__(self, bot)
-        self.triggers = ['vote', 'poll']
-        self.short_help = 'Establish a voting'
+        self.triggers = ['poll', 'vote']
+        self.short_help = 'Create a poll'
         self.help = self.short_help
-        self.help_example = ['!vote :cat: :dog: What are better, dogs or cats?', '!poll :hammer: :ok: :domoweiler: Is `Brottweiler` appropriate?']
+        self.help_example = ['!poll What are better, dogs or cats? :cat: :dog:']
 
     def on_command(self, event, response):
         args = event['text']
@@ -23,17 +23,16 @@ class Vote(CommandPlugin):
             emojis = therest.split(' ')
 
             response['link_names'] = 1  # Enables linking of names
-            attach = Vote.build_slack_attachment(emojis, motion, event)
+            attach = Poll.build_slack_attachment(emojis, motion, event)
             response.update(attachments=json.dumps([attach]))
             message = self.bot.sc.api_call('chat.postMessage', **response)
             message = json.loads(message)
 
             # Create and send first emoji reaction
             for emoji in emojis:
-                response.update(name=(emoji.replace(':', '')), timestamp = message['ts'])
-                self.bot.sc.api_call('reactions.add', **response)
+                self.bot.sc.api_call('reactions.add', **{'name': emoji.replace(':', ''), 'channel': response['channel'], 'timestamp': result['ts']})
         else:
-            raise PluginException('Invalid syntax! E.g. `!vote <emoji...> <question>`')
+            raise PluginException('Invalid syntax! E.g. `!vote <question> <emoji...>`')
 
     @staticmethod
     def build_slack_attachment(emojis, motion, event):
